@@ -5,10 +5,11 @@
 # Contributor: Xavion <Xavion (dot) 0 (at) Gmail (dot) com>
 # Contributor: Miah Johnson <miah (at) chia-pet dot org>
 # Contributor: Dave Simons <miouhpi (at) Gmail (dot) com>
+# Contributor: Niels Abspoel <aboe76 (at) Gmail (dot) com>
 
-pkgname=puppet
-pkgver=2.7.19
-pkgrel=2
+pkgname=puppet3
+pkgver=3.0.0rc3
+pkgrel=1
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
 url="http://puppetlabs.com/projects/puppet/"
@@ -16,19 +17,27 @@ license=("APACHE")
 depends=("ruby" "ruby-shadow" "facter")
 backup=("etc/puppet/puppet.conf")
 options=(emptydirs)
+provides=("puppet")
+conflicts=("puppet")
 install="puppet.install"
 source=("http://puppetlabs.com/downloads/puppet/puppet-$pkgver.tar.gz"
+        "http://downloads.puppetlabs.com/hiera/hiera-puppet-1.0.0rc3.tar.gz"
+        "http://downloads.puppetlabs.com/hiera/hiera-1.0.0rc4.tar.gz"
+        "fileserver.conf"
         "puppet"
-        "puppetmaster"
-        "puppetmaster.service"
         "puppet.conf"
-        "puppet.service")
-md5sums=('ba76fa7831df53db7424a8d523465ef5'
+        "puppetagent.service"
+        "puppetmaster"
+        "puppetmaster.service")
+md5sums=('0fa0e52c516c2c0c7e31f4e7bfa967b8'
+         '6829fb5735e179b90b0491971d9b46a8'
+         '175b7dfd864d003b81c8360eec5fc731'
+         'ffacd9bfb9c7656a3a345dbc5eb0e67a'
          '59dbf39e251bc4877e7604a5876c642d'
+         '65e7af811ce18f7c764f2ab5d2876d76'
+         'bbfe0b847f08012cd534d96fe3758b3e'
          '4c507c580cb28d7a5adc9ea6b3626657'
-         '7af26262ce01900a560ab02e7a38a91c'
-         'a6c0ce2eb12d62fdd3421aa9dff3477d'
-         'e9c544886335d0dd9b0f6f669cee83eb')
+         '15037c609ec10a6046387c43d1641464')
 
 package() {
   cd $srcdir/puppet-$pkgver
@@ -40,6 +49,11 @@ package() {
     --sbindir=/usr/sbin \
     --mandir=/usr/share/man
 
+  # Hiera is essential for Puppet3
+  install -d $pkgdir/usr/lib/ruby/site_ruby/1.9.1/lib/
+  cp -r $srcdir/hiera-1.0.0rc4/lib/* $pkgdir/usr/lib/ruby/site_ruby/1.9.1/
+  cp -r $srcdir/hiera-puppet-1.0.0rc3/lib/* $pkgdir/usr/lib/ruby/site_ruby/1.9.1/
+
   # Set up vim and emacs
   install -Dp -m0644 ext/vim/ftdetect/puppet.vim $pkgdir/usr/share/vim/vimfiles/ftdetect/puppet.vim
   install -Dp -m0644 ext/vim/syntax/puppet.vim $pkgdir/usr/share/vim/vimfiles/syntax/puppet.vim
@@ -49,9 +63,10 @@ package() {
   # Configuration and rc scripts
   install -d $pkgdir/etc/{puppet,rc.d}
   install -m 644 $srcdir/puppet.conf $pkgdir/etc/puppet/puppet.conf
+  install -m 644 $srcdir/fileserver.conf $pkgdir/etc/puppet/fileserver.conf
 
   # Systemd files
-  install -Dm 644 $srcdir/puppet.service $pkgdir/usr/lib/systemd/system/puppet.service
+  install -Dm 644 $srcdir/puppetagent.service $pkgdir/usr/lib/systemd/system/puppetagent.service
   install -Dm 644 $srcdir/puppetmaster.service $pkgdir/usr/lib/systemd/system/puppetmaster.service
 
   # Create puppet homedir
@@ -59,9 +74,6 @@ package() {
 
   install -D $srcdir/puppet $pkgdir/etc/rc.d/puppet
   install -D $srcdir/puppetmaster $pkgdir/etc/rc.d/puppetmaster
-
-  # Move pi to prevent file conflict
-  mv $pkgdir/usr/bin/pi $pkgdir/usr/bin/puppet-pi
 
   # Copy the LICENSE file in the usual directory
   install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
