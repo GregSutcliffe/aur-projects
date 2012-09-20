@@ -76,7 +76,7 @@ package() {
 
   # Configuration for hiera / symlink is there to use hiera within puppet.
   install -m 644 $srcdir/hiera.yaml $pkgdir/etc/
-  ln -s "$pkgdir/etc/hiera.yaml" "$pkgdir/etc/puppet/hiera.yaml"
+  ln -snf /etc/hiera.yaml ${pkgdir}/etc/puppet/hiera.yaml
 
   # Systemd files
   install -Dm 644 $srcdir/puppetagent.service $pkgdir/usr/lib/systemd/system/puppetagent.service
