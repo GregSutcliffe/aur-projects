@@ -41,7 +41,7 @@ md5sums=('3d338150c0c232cca09afa4ea5931864'
          'bbfe0b847f08012cd534d96fe3758b3e'
          '4c507c580cb28d7a5adc9ea6b3626657'
          '15037c609ec10a6046387c43d1641464'
-	 '3c2f95791009f2113f5d3eb54a6577a8')
+	 'c2f380cdcffab3956fe9f6e261d6ea32')
 
 package() {
   cd $srcdir/puppet-$pkgver
