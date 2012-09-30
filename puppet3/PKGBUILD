@@ -8,7 +8,7 @@
 # Contributor: Niels Abspoel <aboe76 (at) Gmail (dot) com>
 
 pkgname=puppet3
-_rc=7
+_rc=8
 _pkgver=3.0.0
 pkgver=${_pkgver}_rc${_rc}
 pkgrel=2
@@ -31,7 +31,7 @@ source=(http://puppetlabs.com/downloads/puppet/puppet-${pkgver//_/-}.tar.gz
         puppet.conf
         puppetmaster
 	hiera.yaml)
-md5sums=('5949f8155060ed857eec448e07437e08'
+md5sums=('791d78885332acdc8351aa92457af8d2'
          '6829fb5735e179b90b0491971d9b46a8'
          '175b7dfd864d003b81c8360eec5fc731'
 	 '389be2d95502d41d26da330207a33db3'
