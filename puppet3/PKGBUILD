@@ -76,6 +76,10 @@ package() {
   install -d $pkgdir/etc/{puppet,rc.d}
   install -m 644 $srcdir/puppet.conf $pkgdir/etc/puppet/puppet.conf
   install -m 644 $srcdir/fileserver.conf $pkgdir/etc/puppet/fileserver.conf
+  
+  # Setup tmpfiles.d config
+  install -d $pkgdir/etc/tmpfiles.d
+  echo "D /var/run/puppet 0755 puppet puppet -" > $pkgdir/etc/tmpfiles.d/puppet.conf
 
   # Configuration for hiera / symlink is there to use hiera within puppet.
   install -m 644 $srcdir/hiera.yaml $pkgdir/etc/
