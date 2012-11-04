@@ -16,7 +16,7 @@
 pkgname=puppet3
 pkgver=3.0.1
 pkgrel=1
-_hieraver=1.1.0
+_hieraver=1.1.1
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
 url="http://puppetlabs.com/projects/puppet/"
@@ -38,7 +38,7 @@ source=(http://puppetlabs.com/downloads/puppet/puppet-${pkgver//_/-}.tar.gz
         hiera.yaml)
 md5sums=('2117e3a1964ac54fcd36d926eed3db94'
          '6829fb5735e179b90b0491971d9b46a8'
-         '0a0774b508fddcc988eef92cd802cf7c'
+         '20f485d09d5ab39e6d4e4f27e0dd97af'
          '389be2d95502d41d26da330207a33db3'
          'ffacd9bfb9c7656a3a345dbc5eb0e67a'
          '59dbf39e251bc4877e7604a5876c642d'
