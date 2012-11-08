@@ -1,12 +1,12 @@
 # Maintainer: Greg Sutcliffe <greg.sutcliffe at gmail dot com>
 pkgname=ruby-augeas
 pkgver=0.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Provides Ruby bindings for augeas"
 arch=('any')
 url="http://augeas.net"
 license=('LGPL')
-depends=('ruby' 'rubygems')
+depends=('ruby' 'rubygems' 'augeas')
 source=(http://rubygems.org/downloads/${pkgname}-${pkgver}.gem)
 noextract=(${pkgname}-${pkgver}.gem)
 md5sums=('1d61673aa968f4f816d1dbdb0b52782d')
