@@ -15,13 +15,14 @@
 
 pkgname=puppet
 pkgver=3.0.1
-pkgrel=2
+pkgrel=3
 _hieraver=1.1.1
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
 url="http://puppetlabs.com/projects/puppet/"
 license=("APACHE")
 depends=("ruby" "ruby-shadow" "facter")
+optdepends=("ruby-augeas")
 backup=("etc/puppet/puppet.conf")
 options=(emptydirs)
 provides=("puppet")
