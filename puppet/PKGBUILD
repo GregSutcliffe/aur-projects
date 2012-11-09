@@ -15,17 +15,18 @@
 
 pkgname=puppet
 pkgver=3.0.1
-pkgrel=1
+pkgrel=3
 _hieraver=1.1.1
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
 url="http://puppetlabs.com/projects/puppet/"
 license=("APACHE")
 depends=("ruby" "ruby-shadow" "facter")
+optdepends=("ruby-augeas")
 backup=("etc/puppet/puppet.conf")
 options=(emptydirs)
 provides=("puppet")
-conflicts=("puppet")
+conflicts=("puppet3")
 install="puppet.install"
 source=(http://puppetlabs.com/downloads/puppet/puppet-${pkgver//_/-}.tar.gz
         http://downloads.puppetlabs.com/hiera/hiera-puppet-1.0.0rc3.tar.gz
