@@ -24,7 +24,7 @@ depends=("ruby" "ruby-shadow" "facter" "ruby-hiera" "ruby-hiera-json")
 backup=("etc/puppet/puppet.conf")
 options=(emptydirs)
 provides=("puppet" "vim-puppet" "ruby-hiera-puppet")
-conflicts=("puppet3" "vim-puppet" "ruby-hiera-puppet")
+conflicts=("puppet3" "ruby-puppet" "vim-puppet" "ruby-hiera-puppet")
 install="puppet.install"
 source=(http://puppetlabs.com/downloads/puppet/puppet-${pkgver//_/-}.tar.gz
         fileserver.conf
