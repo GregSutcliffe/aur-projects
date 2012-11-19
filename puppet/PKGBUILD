@@ -8,14 +8,14 @@
 # Contributor: Niels Abspoel <aboe76 (at) Gmail (dot) com>
 
 # RC style, reserved for later use
-#pkgname=puppet3
+#pkgname=puppet
 #_rc=8
 #_pkgver=3.0.0
 #pkgver=${_pkgver}_rc${_rc}
 
-pkgname=puppet3
+pkgname=puppet
 pkgver=3.0.1
-pkgrel=3
+pkgrel=4
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
 url="http://puppetlabs.com/projects/puppet/"
@@ -24,7 +24,7 @@ depends=("ruby" "ruby-shadow" "facter" "ruby-hiera" "ruby-hiera-json")
 backup=("etc/puppet/puppet.conf")
 options=(emptydirs)
 provides=("puppet" "vim-puppet" "ruby-hiera-puppet")
-conflicts=("puppet" "vim-puppet" "ruby-hiera-puppet")
+conflicts=("puppet3" "vim-puppet" "ruby-hiera-puppet")
 install="puppet.install"
 source=(http://puppetlabs.com/downloads/puppet/puppet-${pkgver//_/-}.tar.gz
         fileserver.conf
