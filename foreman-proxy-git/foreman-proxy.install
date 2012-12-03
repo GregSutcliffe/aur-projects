@@ -19,6 +19,11 @@ pre_upgrade() {
   usermod -d /usr/share/foreman-proxy foreman-proxy &>/dev/null || :
 }
 
+post_upgrade() {
+  chown -R foreman-proxy:foreman-proxy /usr/share/foreman-proxy
+  chown -R foreman-proxy:foreman-proxy /var/log/foreman-proxy
+}
+
 pre_remove() {
   # Cleanup tmpfiles
   rm -rf /usr/share/foreman-proxy/tmp

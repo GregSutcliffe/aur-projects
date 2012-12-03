@@ -2,7 +2,7 @@
 
 pkgname=foreman-proxy-git
 pkgver=20121203
-pkgrel=2
+pkgrel=3
 pkgdesc="Manages DNS, DHCP, TFTP and Puppet though a HTTP Restful API. Used by foreman"
 arch=('any')
 url="http://theforeman.org"
