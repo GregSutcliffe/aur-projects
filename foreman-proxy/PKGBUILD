@@ -1,46 +1,27 @@
 # Maintainer: Greg Sutcliffe <greg.sutcliffe@gmail.com>>
 
 pkgname=foreman-proxy
-pkgver=1.1_0.1rc1
-pkgrel=1
+pkgver=1.1RC1
+pkgrel=2
 pkgdesc="Manages DNS, DHCP, TFTP and Puppet though a HTTP Restful API. Used by foreman"
 arch=('any')
 url="http://theforeman.org"
 license=('GPL3')
 depends=('ruby-sinatra' 'iputils' 'ruby')
-makedepends=('git')
-provides=('foreman-proxy')
-conflicts=('foreman-proxy')
+conflicts=('foreman-proxy-git')
 backup=("etc/foreman-proxy/settings.yml")
 options=(emptydirs)
 install="foreman-proxy.install"
-source=('foreman-proxy.systemd'
-        'foreman-proxy.tmpfiles.conf')
+source=(https://github.com/theforeman/smart-proxy/archive/${pkgver}.tar.gz
+        foreman-proxy.systemd
+        foreman-proxy.tmpfiles.conf)
 noextract=()
-md5sums=('c99762a8f6a0594965f54dcab5cf726a'
+md5sums=('34c832837326825a7eec649de49eb27f'
+         'c99762a8f6a0594965f54dcab5cf726a'
          'f6d26c35bf3b9a7c71105e72053785a1')
 
-_gitroot=https://github.com/theforeman/smart-proxy.git
-_gitname=foreman-proxy
-_gitbranch=c60b9b257893aca558c3c0bc628be06c86d1a434
-
-build() {
-  cd "$srcdir"
-  msg "Connecting to GIT server...."
-
-  if [[ -d "$_gitname" ]]; then
-    cd "$_gitname" && git pull origin && git reset "$_gitbranch" --hard
-    msg "The local files are updated."
-  else
-    git clone "$_gitroot" "$_gitname"
-  fi
-
-  msg "GIT checkout done or server timeout"
-
-}
-
 package() {
-  cd "$srcdir/$_gitname"
+  cd $srcdir/smart-proxy-${pkgver}
 
   # Main codebase
   install -d -m0755 $pkgdir/usr/share/foreman-proxy/
