@@ -15,12 +15,12 @@
 
 pkgname=puppet
 pkgver=3.0.2
-pkgrel=7
+pkgrel=8
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
 url="http://puppetlabs.com/projects/puppet/"
 license=("APACHE")
-depends=("ruby" "ruby-shadow" "facter" "ruby-hiera" "ruby-hiera-json")
+depends=("ruby" "ruby-shadow" "facter" "ruby-hiera" "ruby-hiera-json" "ruby-json_pure")
 makedepends=('which')
 backup=("etc/puppet/puppet.conf")
 options=(emptydirs)
