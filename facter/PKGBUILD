@@ -32,5 +32,3 @@ package() {
 
   install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
   install -m 644 "LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-
-}
