@@ -15,7 +15,7 @@
 
 pkgname=puppet
 _gemname=puppet
-pkgver=3.1.0.rc2
+pkgver=3.1.0
 pkgrel=9
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
@@ -34,12 +34,13 @@ source=(
         "puppet"
         "puppetmaster")
 md5sums=(
-         '26f65f5d7a8cef9ead14ee87aec159e1'
+         '1e9fc8e751e9c3728411c7ba46030071'
          '3913fc038e1d111788c68c2733863155'
          '59dbf39e251bc4877e7604a5876c642d'
          '4c507c580cb28d7a5adc9ea6b3626657')
          #'bc1a9e9ebf3504e2198e11aaef818d97' # 3.0.2
          #'26f65f5d7a8cef9ead14ee87aec159e1' # 3.0.2.rc2
+         #'1e9fc8e751e9c3728411c7ba46030071' # 3.1.0
 noextract=(${_gemname}-${pkgver}.gem)
 
 package() {
