@@ -16,7 +16,7 @@
 pkgname=puppet
 _gemname=puppet
 pkgver=3.1.0
-pkgrel=9
+pkgrel=0
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
 url="http://puppetlabs.com/projects/puppet/"
@@ -30,17 +30,11 @@ conflicts=("puppet3" "ruby-puppet" "vim-puppet")
 install="puppet.install"
 source=(
         "http://gems.rubyforge.org/gems/${_gemname}-${pkgver}.gem"
-        "http://gems.rubyforge.org/gems/hiera-1.0.0.gem"
         "puppet"
         "puppetmaster")
-md5sums=(
-         '1e9fc8e751e9c3728411c7ba46030071'
-         '3913fc038e1d111788c68c2733863155'
+md5sums=('1e9fc8e751e9c3728411c7ba46030071'
          '59dbf39e251bc4877e7604a5876c642d'
          '4c507c580cb28d7a5adc9ea6b3626657')
-         #'bc1a9e9ebf3504e2198e11aaef818d97' # 3.0.2
-         #'26f65f5d7a8cef9ead14ee87aec159e1' # 3.0.2.rc2
-         #'1e9fc8e751e9c3728411c7ba46030071' # 3.1.0
 noextract=(${_gemname}-${pkgver}.gem)
 
 package() {
@@ -50,7 +44,7 @@ package() {
   local _gemdir="$(ruby -rubygems -e'puts Gem.default_dir')"
 
   gem install --no-user-install --ignore-dependencies -i "$pkgdir$_gemdir" \
-    --no-ri --no-rdoc -n "$pkgdir/usr/bin" "{$_gemname}-${pkgver}.gem" "hiera-1.0.0.gem"
+    --no-ri --no-rdoc -n "$pkgdir/usr/bin" "{$_gemname}-${pkgver}.gem"
 
   # Set up vim and emacs
   install -Dp -m0644 "$pkgdir$_gemdir"/gems/$_gemname-$pkgver/ext/vim/ftdetect/puppet.vim $pkgdir/usr/share/vim/vimfiles/ftdetect/puppet.vim
@@ -59,13 +53,12 @@ package() {
   install -Dp -m0644 "$pkgdir$_gemdir"/gems/$_gemname-$pkgver/ext/emacs/puppet-mode-init.el $pkgdir/usr/share/emacs/site-lisp/site-start.d/puppet-mode-init.el
 
   # Configuration and rc scripts
-  #install -d $pkgdir/etc/{puppet,rc.d}
   install -Dm 644 "$pkgdir$_gemdir"/gems/$_gemname-$pkgver/ext/redhat/puppet.conf $pkgdir/etc/puppet/puppet.conf
   install -Dm 644 "$pkgdir$_gemdir"/gems/$_gemname-$pkgver/conf/fileserver.conf $pkgdir/etc/puppet/fileserver.conf
   install -Dm 644 "$pkgdir$_gemdir"/gems/$_gemname-$pkgver/conf/auth.conf $pkgdir/etc/puppet/auth.conf
   install -Dm 644 "$pkgdir$_gemdir"/gems/$_gemname-$pkgver/conf/tagmail.conf $pkgdir/etc/puppet/tagmail.conf
   install -Dm 644 "$pkgdir$_gemdir"/gems/$_gemname-$pkgver/ext/redhat/puppet.conf $pkgdir/etc/puppet/puppet.conf
-  
+
   # Setup tmpfiles.d config
   install -d $pkgdir/etc/tmpfiles.d
   echo "D /var/run/puppet 0755 puppet puppet -" > $pkgdir/etc/tmpfiles.d/puppet.conf
