@@ -1,39 +1,52 @@
-# Foreman-proxy: Installer: Arch
+# Foreman: Installer: Arch
 # Maintainer: Greg Sutcliffe <greg.sutcliffe@gmail.com>>
 
 pre_install() {
-  # Add the "foreman-proxy" user and group
-  getent group foreman-proxy &>/dev/null || groupadd -r foreman-proxy &>/dev/null
-  getent passwd foreman-proxy &>/dev/null || useradd -r -g foreman-proxy -d /usr/share/foreman-proxy -s /sbin/nologin -c "Foreman Proxy deamon user" foreman-proxy &>/dev/null || :
+  # Add the "foreman" user and group
+  getent group foreman &>/dev/null || groupadd -r foreman &>/dev/null
+  getent passwd foreman &>/dev/null || useradd -r -g foreman -d /usr/share/foreman -s /sbin/nologin -c "Foreman daemon user" foreman &>/dev/null || :
 }
 
 post_install() {
-  chown -R foreman-proxy:foreman-proxy /usr/share/foreman-proxy
-  chown -R foreman-proxy:foreman-proxy /var/log/foreman-proxy
-  /usr/bin/systemd-tmpfiles --create foreman-proxy.conf
+  cd /usr/share/foreman
+  chown -R foreman:foreman /usr/share/foreman/
+  # Install the gems as the foreman user to keep them isolated
+  echo "Performing bundle setup and db:migrate"
+  sudo -u foreman -s /bin/bash -c 'GEM_HOME="/usr/share/foreman/.gem/ruby/2.0.0" /usr/bin/bundle install'
+  sudo -u foreman -s /bin/bash -c '/usr/bin/bundle exec rake db:migrate RAILS_ENV=production'
+  echo "Bundle setup / db:migrate complete"
+  chown -R foreman:foreman /usr/share/foreman/
+  chown -R foreman:foreman /var/log/foreman
+  /usr/bin/systemd-tmpfiles --create foreman.conf
   /usr/bin/systemctl daemon-reload >/dev/null 2>&1 || :
 }
 
 pre_upgrade() {
   pre_install
-  usermod -d /usr/share/foreman-proxy foreman-proxy &>/dev/null || :
+  usermod -d /usr/share/foreman foreman &>/dev/null || :
 }
 
 post_upgrade() {
-  chown -R foreman-proxy:foreman-proxy /usr/share/foreman-proxy
-  chown -R foreman-proxy:foreman-proxy /var/log/foreman-proxy
+  cd /usr/share/foreman
+  # Install the gems as the foreman user to keep them isolated
+  echo "Performing bundle update and db:migrate"
+  sudo -u foreman -s /bin/bash -c 'GEM_HOME="/usr/share/foreman/.gem/ruby/2.0.0" /usr/bin/bundle update'
+  sudo -u foreman -s /bin/bash -c '/usr/bin/bundle exec rake db:migrate RAILS_ENV=production'
+  echo "Bundle setup / db:migrate complete"
+  chown -R foreman:foreman /usr/share/foreman
+  chown -R foreman:foreman /var/log/foreman
 }
 
 pre_remove() {
   # Cleanup tmpfiles
-  rm -rf /usr/share/foreman-proxy/tmp
-  /usr/bin/systemctl --no-reload disable foreman-proxy.service >/dev/null 2>&1 || :
-  /usr/bin/systemctl stop foreman-proxy.service >/dev/null 2>&1 || :
+  rm -rf /usr/share/foreman/tmp
+  /usr/bin/systemctl --no-reload disable foreman.service >/dev/null 2>&1 || :
+  /usr/bin/systemctl stop foreman.service >/dev/null 2>&1 || :
 }
 
 post_remove() {
   /usr/bin/systemctl daemon-reload >/dev/null 2>&1 || :
   # Remove user and group
-  groupdel foreman-proxy >/dev/null 2>&1
-  userdel foreman-proxy
+  groupdel foreman >/dev/null 2>&1
+  userdel foreman
 }
