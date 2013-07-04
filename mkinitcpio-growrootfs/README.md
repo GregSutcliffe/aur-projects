@@ -26,6 +26,12 @@ for an example of building an Arch OpenStack image - just add
 `mkinitcpio-growrootfs` to the list of packages to install in your image as
 it's built.
 
+# Caveats
+
+Current only supports ext filesystems - I need to find a way to detect the
+filesystem type so that I can call the appropriate resize tool. Until then,
+`resize2fs` is baked in.
+
 # Copyright / License
 
 Copyright Greg Sutcliffe (greg.sutcliffe@gmail.com) 2013. License is GPLv3.
