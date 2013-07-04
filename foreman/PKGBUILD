@@ -3,7 +3,7 @@
 # Currently does a full bundle install, there are no split packages.
 
 pkgname=foreman
-pkgver=1.2.0_RC3
+pkgver=1.2.0
 pkgrel=1
 pkgdesc="Infrastruce management app built on Ruby-on_rails. Integrates with Puppet for complete lifecycle management or real or virtual servers"
 arch=('any')
@@ -21,7 +21,7 @@ source=(https://github.com/theforeman/foreman/archive/${pkgver//_/-}.tar.gz
         foreman.cron.d
         foreman.logrotate)
 noextract=()
-md5sums=('56c89c56605770cdd98b9affb58ce361'
+md5sums=('428031eda1d04dc35508e300720b9508'
          '1c18ebbfc2a11f48f1fa727dd8bd833c'
          '18fff3491642381dae1020b6dc891576'
          '9a24ac601fb92a388eda1367ca951a82'
