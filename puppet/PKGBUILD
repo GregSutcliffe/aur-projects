@@ -15,7 +15,7 @@
 
 pkgname=puppet
 _gemname=puppet
-pkgver=3.4.1
+pkgver=3.4.2
 pkgrel=1
 pkgdesc="A system for automating system administration tasks."
 arch=("any")
@@ -29,7 +29,7 @@ provides=("puppet" "vim-puppet" "ruby-hiera-puppet")
 conflicts=("puppet3" "ruby-puppet" "vim-puppet")
 install="puppet.install"
 source=(https://rubygems.org/downloads/$_gemname-${pkgver//_/-}.gem)
-md5sums=('2175f19897369969d8bd7255e9720c09')
+md5sums=('c4ee98abe18761a85b3b8f3f37c53167')
 
 noextract=(${_gemname}-${pkgver}.gem)
 
